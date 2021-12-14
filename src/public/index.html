@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+ 
+    <title>React App</title>
+  </head>
+  <body>
+    <div className="root"> </div>
+    <script type= "text/babel">
+    getDefaultProps(){
+      return {
+        brand: 'defaultbrand'
+      }
+    }
+    var Navbar = React.createClass({
+      change(page){
+        this.props.change(props);
+      }
+  render () {
+    return (
+      <div className="div">
+        <nav className="navbar navbar-default">
+  <div className="container-fluid">
+    <a className="navbar-brand" href="#">{this.state.brand}</a>
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarCollapse">
+      <ul className="nav navbar-nav">
+        <li className="{(this.props.currentPage === 'Home' ) ? 'active': ''}">
+          <a className="nav-link" aria-current="page" href="#" onClick={this.change.bind(this,'home')}>Home</a>
+        </li>
+        <li className=""{(this.props.currentPage === 'about' ) ? 'active': ''}"">
+          <a className="nav-link" href="#" onClick={this.change.bind(this,'about')}>About</a>
+        </li>
+        <li className="{(this.props.currentPage === 'contact' ) ? 'active': ''}">
+          <a className="nav-link" href="#" onClick={this.change.bind(this,'contact')}>contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+        </div>
+    );
+  }
+});
+var Jumbotron = React.createClass({
+  render () {
+    return (
+      <div className="jumbotron">
+        <div className="p-5 mb-4 bg-light rounded-3">
+      <div className="container-fluid py-5">
+        <h1 className="display-5 fw-bold">{this.props.heading}</h1>
+        <p className="col-md-8 fs-4">{this.props.text}</p>
+        <button className="btn btn-primary btn-lg" type="button">Example button</button>
+      </div>
+    </div>
+        </div>
+    );
+  }
+});
+var Page = React.createClass({
+  render () {
+    var pageContent;
+    if (this.props.currentPage == 'home'){
+      pageContent = 'this is the home page'
+    } else if (this.props.currentPage == 'about'){
+      pageContent = 'this is the about page'
+    } else if (this.props.currentPage == 'content'){
+      pageContent = 'this is the content page'
+    }
+    return (
+      <div>
+        <div className="container">
+          {pageContent}
+          </div>
+        </div>
+    );
+  }
+});
+var theme = React.createClass({
+  handleChange(){
+    this.setState({currentPage: page})
+  }
+  getInitialState(){
+    currentPage:'home'
+  }
+  getDefaultProps(){
+    brand: 'reactbootstrap',
+    heading: 'Hello world',
+    text: 'Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.'
+  }
+  render () {
+    var jumbotron;
+    if(this.state.currentPage == 'home'){
+      jumbotron = <Jumbotron heading: {this.state.heading} text: {this.state.text} />
+    }else {
+      jumbotron = ''
+    }
+    return (
+      <Navbar currentPage: {this.state.currentPage} brand: {this.state.brand} change: {this.handleChange} />
+      {jumbotron}
+      <Page currentPage: {this.state.currentPage} />
+    );
+  }
+});
+ ReactDom.render(
+   <div className="div">
+    <Theme />
+    </div>,
+    document.getElementById('root')
+ );
+    </script>
+    <div id="root"></div>
+  
+  </body>
+</html>
